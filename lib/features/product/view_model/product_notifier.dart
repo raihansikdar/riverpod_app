@@ -8,7 +8,11 @@ class ProductViewModelNotifier extends StateNotifier<AsyncValue<List<ProductMode
   ProductViewModelNotifier(this.productRepository):super(const AsyncLoading()){
       getAllProducts();
   }
+
+  //ProductViewModelNotifier(this.productRepository):super(const AsyncValue.loading());
+
   Future<void>getAllProducts()async{
+   // state = const AsyncLoading();
     try{
       final products = await productRepository.getAllProducts();
       state = AsyncData(products);
