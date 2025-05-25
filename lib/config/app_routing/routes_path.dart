@@ -19,5 +19,5 @@ class RoutesPath {
       "/$categoryWiseProductBase/$categoryName";
 
   static String productDetails({required String categoryName,required int productId}) =>
-      "/home/$categoryWiseProductBase/$categoryName/$productDetailsBase/$productId";
+      "/$categoryWiseProductBase/$categoryName/$productDetailsBase/$productId";
 }
