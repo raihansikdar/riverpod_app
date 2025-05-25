@@ -21,7 +21,7 @@ class CategoryWiseProductRepositoryImpl implements CategoryWiseProductRepository
       );
 
       if(response.isSuccess){
-        return (response.body as List).map((json)=>CategoryWiseProductModel.fromJson(json)).toList().cast<CategoryWiseProductModel>();
+        return (response.body as List).map((json)=>CategoryWiseProductModel.fromJson(json)).toList();
       }else{
         throw Exception('Failed to fetch category wise product data');
       }

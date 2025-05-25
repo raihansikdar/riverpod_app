@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:riverpod_app/config/app_routing/routes_path.dart';
 import 'package:riverpod_app/features/category/view_model/category_provider.dart';
 import 'package:riverpod_app/features/product/view_model/product_provider.dart';
 
@@ -38,7 +42,13 @@ class ProductScreen extends ConsumerWidget {
                         onTap: () {
                           //final categoryName = categoryState.categoryList[index].name;
                           // context.push('/home/categoryWishProduct/$categoryName');
-                        //  context.push(RoutesPath.categoryWiseProduct(categoryName: categoryName ?? ''));
+                          log(category[index].name);
+                       //   debugPrint(GoRouter.of(context).toString()); // If this crashes, context isn't within a GoRouter
+
+                          //context.push(RoutesPath.categoryWiseProduct(categoryName: category[index].name ?? ''));
+
+                          GoRouter.of(context).push(RoutesPath.categoryWiseProduct(categoryName: category[index].name ?? ''));
+
                         },
 
                         child: Card(

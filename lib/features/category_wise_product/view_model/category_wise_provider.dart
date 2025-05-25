@@ -8,7 +8,7 @@ final categoryWiseRepositoryProvider = Provider<CategoryWiseProductRepository>((
   return CategoryWiseProductRepositoryImpl();
 });
 
-final productProvider = StateNotifierProvider<CategoryWiseProductNotifier, AsyncValue<List<CategoryWiseProductModel>>>((ref) {
+final categoryProductProvider = StateNotifierProvider<CategoryWiseProductNotifier, AsyncValue<List<CategoryWiseProductModel>>>((ref) {
   final repository = ref.watch(categoryWiseRepositoryProvider);
   return CategoryWiseProductNotifier(repository);
 });

@@ -1,30 +1,38 @@
+// Utility function to handle int/double conversion
+double? toDouble(dynamic value) {
+  if (value == null) return null;
+  if (value is int) return value.toDouble();
+  if (value is double) return value;
+  return null; // or throw Exception('Unexpected type for value: $value');
+}
+
 class CategoryWiseProductModel {
   int? id;
   String? title;
-  int? price;
+  double? price;
   String? description;
   String? category;
   String? image;
   Rating? rating;
 
-  CategoryWiseProductModel(
-      {this.id,
-        this.title,
-        this.price,
-        this.description,
-        this.category,
-        this.image,
-        this.rating});
+  CategoryWiseProductModel({
+    this.id,
+    this.title,
+    this.price,
+    this.description,
+    this.category,
+    this.image,
+    this.rating,
+  });
 
   CategoryWiseProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    price = json['price'];
+    price = toDouble(json['price']);
     description = json['description'];
     category = json['category'];
     image = json['image'];
-    rating =
-    json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
+    rating = json['rating'] != null ? Rating.fromJson(json['rating']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -49,7 +57,7 @@ class Rating {
   Rating({this.rate, this.count});
 
   Rating.fromJson(Map<String, dynamic> json) {
-    rate = json['rate'];
+    rate = toDouble(json['rate']);
     count = json['count'];
   }
 
