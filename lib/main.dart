@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_app/config/app_routing/app_routhing.dart';
-import 'package:riverpod_app/features/counter_and_change_button/views/counter_page.dart';
-import 'package:riverpod_app/features/product/views/screen/product_screen.dart';
 
 void main() {
   runApp(const MyApp());
