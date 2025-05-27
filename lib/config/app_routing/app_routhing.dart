@@ -1,26 +1,27 @@
 
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_app/config/app_routing/routes_path.dart';
+import 'package:riverpod_app/features/auth/login/views/screen/login_screen.dart';
 import 'package:riverpod_app/features/category_wise_product/views/screen/category_wise_product_screen.dart';
 import 'package:riverpod_app/features/counter_and_change_button/views/counter_page.dart';
 import 'package:riverpod_app/features/product/views/screen/product_screen.dart';
-
-import '../../features/product_details/views/screen/product_details_csreen.dart';
+import 'package:riverpod_app/features/product_details/views/screen/product_details_csreen.dart';
+import 'package:riverpod_app/features/splash/splash_screen.dart';
 
 
 class AppRouting {
   static final GoRouter router = GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: RoutesPath.homeScreen,
+    initialLocation: RoutesPath.splashScreen,
     routes: [
-      // GoRoute(
-      //   path: RoutesPath.splashScreen,
-      //   builder: (context, state) => SplashScreen(),
-      // ),
-      // GoRoute(
-      //   path: RoutesPath.loginScreen,
-      //   builder: (context, state) => LoginScreen(),
-      // ),
+      GoRoute(
+        path: RoutesPath.splashScreen,
+        builder: (context, state) => SplashScreen(),
+      ),
+      GoRoute(
+        path: RoutesPath.loginScreen,
+        builder: (context, state) => LoginScreen(),
+      ),
       GoRoute(
         path: RoutesPath.homeScreen,
         builder: (context, state) => ProductScreen(),
