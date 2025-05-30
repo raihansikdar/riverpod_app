@@ -49,11 +49,11 @@ class LoginScreen extends ConsumerWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () async{
-                          final newState =   await ref.read(loginProvider.notifier).login(
+                            await ref.read(loginProvider.notifier).login(
                                 emailTEController.text.trim(),
                                 passwordTEController.text.trim()
                             );
-                           // final newState = ref.read(loginProvider);
+                            final newState = ref.read(loginProvider);
 
                             newState.when(
                               data: (success) {
