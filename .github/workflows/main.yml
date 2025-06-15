@@ -26,9 +26,8 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.11.0-0.0.pre.123'  # Specify a known Flutter version here
           channel: 'stable'
-          architecture: x64
+
 
 
       - run: flutter pub get
