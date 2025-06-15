@@ -14,7 +14,7 @@ on:
 jobs:
   build:
     name: Build & Release Android
-    runs-on: windows-latest  # Or `ubuntu-latest` if you prefer Linux
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
