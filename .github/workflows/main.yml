@@ -35,15 +35,9 @@ jobs:
 
       - run: flutter build apk --release --split-per-abi
 
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload APK to Release
+        uses: ncipollo/release-action@v1
         with:
-          name: rivepod-release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
-
-#      - name: Upload APK to Release
-#        uses: ncipollo/release-action@v1
-#        with:
-#          artifacts: "build/app/outputs/apk/release/*"
-#          tag: v1.0.${{ github.run_number }}
-#          token: ${{ secrets.TOKEN }}
+          artifacts: "build/app/outputs/apk/release/*"
+          tag: v1.0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
