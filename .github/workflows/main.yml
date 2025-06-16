@@ -1,3 +1,67 @@
+#name: "Build & Release Android Only"
+#
+#on:
+#  pull_request:
+#    branches:
+#      - main
+#      - master
+#  push:
+#    branches:
+#      - main
+#      - master
+#
+#jobs:
+#  build:
+#    name: Build & Release Android
+#    runs-on: windows-latest
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Java 17
+#        uses: actions/setup-java@v4
+#        with:
+#          distribution: 'zulu'
+#          java-version: '17'
+#
+#      - name: Set up Flutter
+#        uses: subosito/flutter-action@v2
+#        with:
+#          flutter-version: '3.32.4'
+#          channel: 'stable'
+#
+#      - name: Install dependencies
+#        run: flutter pub get
+#
+#      - name: Decode Keystore
+#        shell: pwsh
+#        run: |
+#          $base64String = "${{ secrets.KEYSTORE }}"
+#          [System.IO.File]::WriteAllBytes("android/app/upload-keystore.jks", [System.Convert]::FromBase64String($base64String))
+#
+#      - name: Create key.properties
+#        run: |
+#          echo storePassword=raihan007 > android/key.properties
+#          echo keyPassword=raihan007 >> android/key.properties
+#          echo keyAlias=upload >> android/key.properties
+#          echo storeFile=upload-keystore.jks >> android/key.properties
+#
+#      - name: Build APK
+#        run: flutter build apk --release
+#
+#      - name: Build AAB
+#        run: flutter build appbundle --release
+#
+#      - name: Upload APK & AAB to Release
+#        uses: ncipollo/release-action@v1
+#        with:
+#          artifacts: |
+#            build/app/outputs/flutter-apk/app-release.apk
+#            build/app/outputs/bundle/release/app-release.aab
+#          tag: v1.0.${{ github.run_number }}
+#          token: ${{ secrets.TOKEN }}
+
 name: "Build & Release Android Only"
 
 on:
@@ -53,11 +117,22 @@ jobs:
       - name: Build AAB
         run: flutter build appbundle --release
 
-      - name: Upload APK & AAB to Release
+      - name: Create Native Debug Symbols Zip
+        shell: pwsh
+        run: |
+          $nativeLibsPath = "build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib"
+          if (Test-Path $nativeLibsPath) {
+            Compress-Archive -Path "$nativeLibsPath/*" -DestinationPath "native-debug-symbols.zip"
+          } else {
+            Write-Output "Native libraries directory not found at $nativeLibsPath, skipping zip creation."
+          }
+
+      - name: Upload APK, AAB, and Native Debug Symbols to Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
             build/app/outputs/flutter-apk/app-release.apk
             build/app/outputs/bundle/release/app-release.aab
+            native-debug-symbols.zip
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
