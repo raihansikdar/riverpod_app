@@ -60,6 +60,8 @@
 #            build/app/outputs/bundle/release/app-release.aab
 #          tag: v1.0.${{ github.run_number }}
 #          token: ${{ secrets.TOKEN }}
+
+
 name: "Build & Release Android Only"
 
 on:
@@ -98,14 +100,17 @@ jobs:
         run: flutter pub get
 
       - name: Decode Keystore
-        run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/upload-keystore.jks
+        shell: pwsh
+        run: |
+          $base64String = "${{ secrets.KEYSTORE }}"
+          [System.IO.File]::WriteAllBytes("android/app/upload-keystore.jks", [System.Convert]::FromBase64String($base64String))
 
       - name: Create key.properties
         run: |
-          echo "storePassword=raihan007" > android/key.properties
-          echo "keyPassword=raihan007" >> android/key.properties
-          echo "keyAlias=upload" >> android/key.properties
-          echo "storeFile=upload-keystore.jks" >> android/key.properties
+          echo storePassword=raihan007 > android/key.properties
+          echo keyPassword=raihan007 >> android/key.properties
+          echo keyAlias=upload >> android/key.properties
+          echo storeFile=upload-keystore.jks >> android/key.properties
 
       - name: Build APK
         run: flutter build apk --release
